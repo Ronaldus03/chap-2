@@ -2,12 +2,9 @@
 #include<string.h>
 #include<stdlib.h>
 
-/*
-Carrick 100 -> Livia 99 ->Valencia 95
-*/
+
 
 struct Node{
-    char name[255];
     int score;
     Node *next;//merujuk ke node selanjtunya
 }*head, *tail;// global variabelnya, head dan tail
@@ -16,24 +13,33 @@ struct Node{
 
 //char *name sama dengan char name[]
 
-Node *createNode(const char *name, int score){
+int max=0;
+int min=50;
+
+Node *createNode( int score){
     Node *newNode = (Node*)malloc(sizeof(Node));
-    strcpy(newNode->name, name);
+    // strcpy(newNode->name, name);
     newNode ->score = score;
-    newNode->next = NULL;
+
+    if(max<score){
+        max=score;
+    }
+    if(min>score){
+        min=score;
+    }
     return newNode;
 
 }
 
 //push head, push tail
 
-void pushHead(const char *name, int score){
+void pushHead( int score){
     //1. buat dulu nodenya
     //2. cek kondisi
     // jika tidak ada head,maka node menjadi head dan tail
     // jika ada head , node akan menjadi head baru dan node->next = head lama
 
-    Node *temp = createNode(name, score);//buat dulu nodenya
+    Node *temp = createNode(score);//buat dulu nodenya
 
     if(!head){
         head = tail = temp; //maka nodneya akan menjadi head dan tail
@@ -44,13 +50,13 @@ void pushHead(const char *name, int score){
 
 }
 
-void pushTail(const char *name, int score){
+void pushTail( int score){
     //1. buat dulu nodenya
     //2. cek kondisi
     // jika tidak ada head,maka node menjadi head dan tail
     // jika ada head , node akan menjadi head baru dan node->next = head lama
 
-    Node *temp = createNode(name, score);//buat dulu nodenya
+    Node *temp = createNode(score);//buat dulu nodenya
 
     if(!head){
         head = tail = temp; //maka nodneya akan menjadi head dan tail
@@ -93,22 +99,17 @@ void popTail(){
 
 }
 
-void printList(){
-    Node *curr = head; //53(curr,head) -> 70 -> 40 (tail) ->NULL
 
-    while(curr){
-        printf("%s %d ",curr->name,curr->score);
-        curr = curr->next;
-    }
-}
 
 int main()
 {
-    pushHead("Cariick", 100);
-    pushTail("bryan",90);
-    pushTail("Valencia",80);
-
-    printList();
+  
+    pushHead(5);
+    pushTail(6);
+    pushTail(7);
+    pushTail(8);
+    
+   printf("%d ",max-min);
 
     return 0;
 }
